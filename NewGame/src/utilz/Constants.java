@@ -17,6 +17,14 @@ public class Constants {
 		public static final int SKELE_DRAWOFFSET_X = (int) (26 * Game.scale);
 		public static final int SKELE_DRAWOFFSET_Y = (int) (8 * Game.scale);
 
+		public static final int CACO = 5;
+		public static final int CACO_WIDTH_DEFAULT = 64;
+		public static final int CACO_HEIGHT_DEFAULT = 64;
+		public static final int CACO_WIDTH = (int) (CACO_WIDTH_DEFAULT * Game.scale);
+		public static final int CACO_HEIGHT = (int) (CACO_HEIGHT_DEFAULT * Game.scale);
+		public static final int CACO_DRAWOFFSET_X = (int) (26 * Game.scale);
+		public static final int CACO_DRAWOFFSET_Y = (int) (8 * Game.scale);
+
 		public static int getSpriteAmount(int enemyType, int enemyState) {
 			switch (enemyType) {
 			case SKELE:
@@ -31,6 +39,18 @@ public class Constants {
 					return 3;
 				case DEAD:
 					return 13;
+				}
+			case CACO:
+				switch (enemyState) {
+				case RUNNING:
+				case IDLE:
+					return 6;
+				case ATTACK:
+					return 6;
+				case HIT:
+					return 4;
+				case DEAD:
+					return 8;
 				}
 			}
 			return 0;
