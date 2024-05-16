@@ -1,23 +1,25 @@
 package inputs;
-import static utilz.Constants.Direction.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import entities.Player;
 import gamestates.Gamestate;
 import main.GamePanel;
-public class KeyboardInputs implements KeyListener{
+
+public class KeyboardInputs implements KeyListener {
 	private GamePanel gamePanel;
+
 	public KeyboardInputs(GamePanel gamePanel) {
 		this.gamePanel = gamePanel;
 	}
+
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void keyPressed(KeyEvent e) {
-		switch(Gamestate.state) {
+		switch (Gamestate.state) {
 		case MENU:
 			gamePanel.getGame().getMenu().keyPressed(e);
 			break;
@@ -26,12 +28,12 @@ public class KeyboardInputs implements KeyListener{
 			break;
 		default:
 			break;
-		
+
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
-		switch(Gamestate.state) {
+		switch (Gamestate.state) {
 		case MENU:
 			gamePanel.getGame().getMenu().keyReleased(e);
 			break;
@@ -40,8 +42,8 @@ public class KeyboardInputs implements KeyListener{
 			break;
 		default:
 			break;
-		
+
 		}
-		
+
 	}
 }
