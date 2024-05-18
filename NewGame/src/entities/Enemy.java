@@ -105,9 +105,13 @@ public abstract class Enemy extends Entity {
 				aniIndex = 0;
 				if (enemyState == ATTACK)
 					enemyState = IDLE;
-				else if (enemyState == HIT)
-					enemyState = IDLE;
-				else if (enemyState == DEAD)
+				else
+//					if (enemyState == HIT) {
+//					enemyState = IDLE;
+//				}
+//
+//				else
+				if (enemyState == DEAD)
 					active = false;
 			}
 		}

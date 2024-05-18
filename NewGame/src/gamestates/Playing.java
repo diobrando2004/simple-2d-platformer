@@ -67,7 +67,7 @@ public class Playing extends State implements Statemethod {
 			levelManager.update();
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
-			cacoManager.update();
+			cacoManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			checkCloseToBordder();
 		} else
 			pauseOverlay.update();
