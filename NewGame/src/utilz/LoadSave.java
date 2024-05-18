@@ -1,7 +1,5 @@
 package utilz;
 
-import static utilz.Constants.EnemyConstant.CACO;
-
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -65,8 +63,8 @@ public class LoadSave {
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
 				int value = color.getGreen();
-				if (value == CACO) {
-					list.add(new Caco(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
+				if (value == 5) {
+					list.add(new Caco((int) i * Game.TILES_SIZE, (int) j * Game.TILES_SIZE));
 				}
 			}
 		}
