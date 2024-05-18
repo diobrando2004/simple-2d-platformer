@@ -125,7 +125,7 @@ public abstract class Enemy extends Entity {
 	}
 
 	protected boolean canSeePlayer(int[][] lvlData, Player player) {
-		int playerTileY = (int) player.getHitbox().y / Game.TILES_SIZE;
+		int playerTileY = (int) (player.getHitbox().y / Game.TILES_SIZE);
 		if (playerTileY + 1 == tileY) {
 			if (isPlayerInRange(player)) {
 				if (IsSightClear(lvlData, hitbox, player.hitbox, tileY))

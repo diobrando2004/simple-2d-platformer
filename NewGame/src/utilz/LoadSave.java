@@ -63,7 +63,7 @@ public class LoadSave {
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
 				int value = color.getGreen();
-				if (value == 0) {
+				if (value == 5) {
 					list.add(new Caco((int) (i * Game.TILES_SIZE), (int) (j * Game.TILES_SIZE)));
 				}
 			}

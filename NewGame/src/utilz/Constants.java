@@ -18,6 +18,11 @@ public class Constants {
 		public static final int SKELE_DRAWOFFSET_Y = (int) (8 * Game.scale);
 
 		public static final int CACO = 5;
+		public static final int CACO_IDLE = 0;
+		public static final int CACO_RUNNING = 0;
+		public static final int CACO_ATTACK = 1;
+		public static final int CACO_HIT = 2;
+		public static final int CACO_DEAD = 3;
 		public static final int CACO_WIDTH_DEFAULT = 64;
 		public static final int CACO_HEIGHT_DEFAULT = 64;
 		public static final int CACO_WIDTH = (int) (CACO_WIDTH_DEFAULT * Game.scale);
@@ -42,14 +47,13 @@ public class Constants {
 				}
 			case CACO:
 				switch (enemyState) {
-				case RUNNING:
-				case IDLE:
+				case CACO_IDLE:
 					return 6;
-				case ATTACK:
+				case CACO_ATTACK:
 					return 6;
-				case HIT:
+				case CACO_HIT:
 					return 4;
-				case DEAD:
+				case CACO_DEAD:
 					return 8;
 				}
 			}
