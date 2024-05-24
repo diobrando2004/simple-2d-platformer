@@ -27,9 +27,8 @@ public class Constants {
 		public static int getSpriteAmount(int object_type) {
 			switch (object_type) {
 			case ENDING_KEY:
-			case HEART:
+			case HEAL:
 				return 12;
-				break;
 			}
 			return 1;
 		}
