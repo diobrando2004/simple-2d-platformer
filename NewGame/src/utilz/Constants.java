@@ -3,6 +3,38 @@ package utilz;
 import main.Game;
 
 public class Constants {
+	public static final int aniSpeed = 25;
+
+	public static class ObjectConstants {
+		public static final int HEART = 0;
+		public static final int STAMINA = 1;
+		public static final int COIN = 2;
+		public static final int SHIELD = 3;
+		public static final int HEAL = 4;
+		public static final int DIAMOND = 5;
+		public static final int ENDING_KEY = 7;
+
+		public static final int ENDING_KEY_WIDTH_DEFAULT = 16;
+		public static final int ENDING_KEY_HEIGHT_DEFAULT = 16;
+		public static final int ENDING_KEY_WIDTH = (int) (Game.scale * ENDING_KEY_WIDTH_DEFAULT);
+		public static final int ENDING_KEY_HEIGHT = (int) (Game.scale * ENDING_KEY_HEIGHT_DEFAULT);
+
+		public static final int HEART_WIDTH_DEFAULT = 16;
+		public static final int HEART_HEIGHT_DEFAULT = 16;
+		public static final int HEART_WIDTH = (int) (Game.scale * ENDING_KEY_WIDTH_DEFAULT);
+		public static final int HEART_HEIGHT = (int) (Game.scale * ENDING_KEY_HEIGHT_DEFAULT);
+
+		public static int getSpriteAmount(int object_type) {
+			switch (object_type) {
+			case ENDING_KEY:
+			case HEART:
+				return 12;
+				break;
+			}
+			return 1;
+		}
+	}
+
 	public static class EnemyConstant {
 		public static final int SKELE = 0;
 		public static final int IDLE = 3;

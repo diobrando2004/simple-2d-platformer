@@ -1,5 +1,6 @@
 package entities;
 
+import static utilz.Constants.aniSpeed;
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstant.ATTACK;
@@ -21,7 +22,8 @@ import main.Game;
 
 public abstract class Enemy extends Entity {
 	protected int aniIndex, enemyState = 3, enemyType;
-	protected int aniTick, aniSpeed = 25;
+	protected int aniTick;
+
 	protected boolean firstUpdate = true;
 	protected boolean inAir = false;
 	protected float fallSpeed;
@@ -105,13 +107,9 @@ public abstract class Enemy extends Entity {
 				aniIndex = 0;
 				if (enemyState == ATTACK)
 					enemyState = IDLE;
-				else
-//					if (enemyState == HIT) {
-//					enemyState = IDLE;
-//				}
-//
-//				else
-				if (enemyState == DEAD)
+				else if (enemyState == HIT) {
+					enemyState = IDLE;
+				} else if (enemyState == DEAD)
 					active = false;
 			}
 		}

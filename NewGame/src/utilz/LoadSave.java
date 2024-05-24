@@ -1,5 +1,7 @@
 package utilz;
 
+import static utilz.Constants.EnemyConstant.CACO;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -10,10 +12,11 @@ import javax.imageio.ImageIO;
 
 import entities.Caco;
 import entities.Skele;
-import main.Game;;
+import main.Game;
 
 public class LoadSave {
 	public static final String CACO_SPRITE = "Cacodaemon Sprite Sheet.png";
+	public static final String ENDING_KEY = "GameItemsAnims-Sheet.png";
 
 	public static BufferedImage GetSpriteAtlas(String filename) {
 		BufferedImage image = null;
@@ -63,7 +66,7 @@ public class LoadSave {
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
 				int value = color.getGreen();
-				if (value == 5) {
+				if (value == CACO) {
 					list.add(new Caco((int) (i * Game.TILES_SIZE), (int) (j * Game.TILES_SIZE)));
 				}
 			}
