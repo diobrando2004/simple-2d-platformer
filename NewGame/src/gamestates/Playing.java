@@ -17,6 +17,7 @@ import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import objects.ObjectManager;
 import ui.GameOverOverlay;
 import ui.PauseOverlay;
 import utilz.LoadSave;
@@ -25,6 +26,7 @@ public class Playing extends State implements Statemethod {
 	private Player player;
 	private LevelManager levelManager;
 //	private CacoManager cacoManager;
+	private ObjectManager objectManager;
 	private EnemyManager enemyManager;
 	private PauseOverlay pauseOverlay;
 	private GameOverOverlay gameOverOverlay;
@@ -54,6 +56,7 @@ public class Playing extends State implements Statemethod {
 	private void InitClasses() {
 		levelManager = new LevelManager(game);
 		enemyManager = new EnemyManager(this);
+		objectManager = new ObjectManager(this);
 		player = new Player(200, 200, 64, 64, this);
 		player.loadlvlData(levelManager.getCurrentLevel().getLevelData());
 		pauseOverlay = new PauseOverlay(this);
@@ -63,6 +66,7 @@ public class Playing extends State implements Statemethod {
 	public void update() {
 		if (!paused && !gameOver) {
 			levelManager.update();
+			objectManager.update();
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 //			cacoManager.update(levelManager.getCurrentLevel().getLevelData(), player);
@@ -91,6 +95,7 @@ public class Playing extends State implements Statemethod {
 		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
+		objectManager.draw(g, xLvlOffset);
 //		cacoManager.draw(g, xLvlOffset);
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 150));
@@ -230,5 +235,9 @@ public class Playing extends State implements Statemethod {
 
 	public void WindowFocusLost() {
 		player.resetDirBoolean();
+	}
+
+	public ObjectManager getObjectManager() {
+		return objectManager;
 	}
 }
