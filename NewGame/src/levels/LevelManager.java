@@ -18,10 +18,10 @@ public class LevelManager {
 		Level1 = new Level(LoadSave.GetLevelData());
 	}
 
-	public void loadNextLevel() {
-		Level newLevel = levels.get(lvlIndex);
-		game.getPlaying().getObjectManager().loadObjects(newLevel);
-	}
+//	public void loadNextLevel() {
+////		Level newLevel = levels.get(lvlIndex);
+//		game.getPlaying().getObjectManager().loadObjects(newLevel);
+//	}
 
 	private void importOutsideSprite() {
 

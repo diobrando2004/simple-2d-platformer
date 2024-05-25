@@ -3,7 +3,6 @@ package levels;
 import java.util.ArrayList;
 
 import objects.EndingKey;
-import utilz.HelpMethod;
 
 public class Level {
 	private int[][] lvlData;
@@ -11,12 +10,12 @@ public class Level {
 
 	public Level(int[][] lvlData) {
 		this.lvlData = lvlData;
-		creatEndingKeys();
+//		creatEndingKeys();
 	}
 
-	private void creatEndingKeys() {
-		keys = HelpMethod.getKeys(img);
-	}
+//	private void creatEndingKeys() {
+//		keys = HelpMethod.getKeys(img);
+//	}
 
 	public int GetSpriteIndex(int x, int y) {
 		return lvlData[y][x];

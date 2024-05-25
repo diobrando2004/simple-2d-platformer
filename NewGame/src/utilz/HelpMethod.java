@@ -92,6 +92,9 @@ public class HelpMethod {
 	}
 
 	public static boolean isFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData, int walkDir) {
+		if (xSpeed > 0) {
+
+		}
 		if (walkDir == 0)
 			return IsSolid(hitbox.x - xSpeed, hitbox.y + hitbox.height + 1, lvlData);
 		else
