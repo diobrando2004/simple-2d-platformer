@@ -1,6 +1,5 @@
 package objects;
 
-import static utilz.Constants.ObjectConstants.ENDING_KEY;
 import static utilz.Constants.ObjectConstants.ENDING_KEY_HEIGHT;
 import static utilz.Constants.ObjectConstants.ENDING_KEY_WIDTH;
 
@@ -9,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import gamestates.Playing;
+import levels.Level;
 import utilz.LoadSave;
 
 public class ObjectManager {
@@ -20,8 +20,7 @@ public class ObjectManager {
 	public ObjectManager(Playing playing) {
 		this.playing = playing;
 		loadImgs();
-		keys = new ArrayList<>();
-		keys.add(new EndingKey(300, 300, ENDING_KEY));
+
 	}
 
 	private void loadImgs() {
@@ -51,6 +50,11 @@ public class ObjectManager {
 						(int) (k.getHitbox().y - k.getyDrawOffset()), ENDING_KEY_WIDTH, ENDING_KEY_HEIGHT, null);
 			}
 		}
+
+	}
+
+	public void loadObjects(Level newLevel) {
+		keys = newLevel.getEndingKeys();
 
 	}
 

@@ -1,8 +1,14 @@
 package utilz;
 
+import static utilz.Constants.ObjectConstants.ENDING_KEY;
+
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import main.Game;
+import objects.EndingKey;
 
 public class HelpMethod {
 	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) {
@@ -111,5 +117,19 @@ public class HelpMethod {
 		else
 			return isAllTileWalkable(firstXTile, secondXTile, yTile, lvlData);
 
+	}
+
+	public static ArrayList<EndingKey> getKeys(BufferedImage img) {
+
+		ArrayList<EndingKey> list = new ArrayList<>();
+		for (int j = 0; j < img.getHeight(); j++)
+			for (int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getBlue();
+				if (value == ENDING_KEY)
+					list.add(new EndingKey((int) i * Game.TILES_SIZE, (int) j * Game.TILES_SIZE, ENDING_KEY));
+
+			}
+		return list;
 	}
 }
