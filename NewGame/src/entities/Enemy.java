@@ -16,6 +16,7 @@ import static utilz.HelpMethod.IsEntityOnFloor;
 import static utilz.HelpMethod.IsSightClear;
 import static utilz.HelpMethod.isFloor;
 import static utilz.Constants.gravity;
+import static utilz.Constants.EnemyConstant.*;
 
 import java.awt.geom.Rectangle2D;
 
@@ -79,16 +80,26 @@ public abstract class Enemy extends Entity {
 	}
 
 	public void hurt(int amount) {
+		if(enemyType == SKELE) {
 		currentHealth -= amount;
 		if (currentHealth <= 0)
 			newState(DEAD);
 		else
 			newState(HIT);
-	}
+		}
+		else if(enemyType== CACO) {
+			currentHealth -= amount;
+			if (currentHealth <= 0)
+				newState(CACO_DEAD);
+			else
+				newState(CACO_HIT);
+			}
+		}
 
 	protected void checkEnemyHit(Rectangle2D.Float attackBox, Player player) {
-		if (attackBox.intersects(player.hitbox))
+		if (attackBox.intersects(player.hitbox)) {
 			player.changeHealth(-getEnemyDmg(enemyType));
+		}
 		attackChecked = true;
 
 	}
@@ -105,6 +116,22 @@ public abstract class Enemy extends Entity {
 				else if (state == HIT) {
 					state = IDLE;
 				} else if (state == DEAD)
+					active = false;
+			}
+		}
+	}
+	protected void updateAnimationTickCACO() {
+		AniTick++;
+		if (AniTick >= aniSpeed) {
+			AniTick = 0;
+			AniIndex++;
+			if (AniIndex >= getSpriteAmount(enemyType, state)) {
+				AniIndex = 0;
+				if (state == CACO_ATTACK)
+					state = CACO_IDLE;
+				else if (state == CACO_HIT) {
+					state = CACO_IDLE;
+				} else if (state == CACO_DEAD)
 					active = false;
 			}
 		}

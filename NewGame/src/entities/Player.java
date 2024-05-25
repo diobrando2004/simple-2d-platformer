@@ -2,6 +2,7 @@ package entities;
 
 import static utilz.Constants.aniSpeed;
 import static utilz.Constants.PlayerConstants.Falling;
+import static utilz.Constants.PlayerConstants.*;
 import static utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static utilz.Constants.PlayerConstants.Idle;
 import static utilz.Constants.PlayerConstants.Jumping;
@@ -13,6 +14,7 @@ import static utilz.HelpMethod.GetEntityXPosNextToWall;
 import static utilz.HelpMethod.GetEntityYPosUnderRoofOrAboveFloor;
 import static utilz.HelpMethod.IsEntityOnFloor;
 import static utilz.Constants.gravity;
+import static utilz.Constants.Direction.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -28,7 +30,8 @@ public class Player extends Entity {
 	private BufferedImage[][] animations = new BufferedImage[15][8];
 	private boolean left, right, jump;
 	private boolean moving = false, attacking = false;
-	
+	private boolean knockback=false;
+	int knockbakccounter =0;
 	private int[][] lvlData;
 	private float xDrawOffset = 6 * Game.scale;
 	private float yDrawOffset = 6 * Game.scale;
@@ -78,7 +81,6 @@ public class Player extends Entity {
 
 	private void initAttackBox() {
 		attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.scale), (int) (20 * Game.scale));
-
 	}
 
 	public void update() {
@@ -89,7 +91,17 @@ public class Player extends Entity {
 			return;
 		}
 		updateAttackBox();
-
+		if (state == HIT) {
+			if (AniIndex <= GetSpriteAmount(state) - 3) {
+				knockedup();
+				if(inAir)
+					pushBack(pushBackDir, lvlData, 1.25f);
+			
+			}
+				
+			updatePushBackDrawOffset();
+			state =Idle;
+		}else 
 		updatePos();
 		if (attacking)
 			checkAttack();
@@ -102,6 +114,8 @@ public class Player extends Entity {
 			return;
 		attackChecked = true;
 		playing.checkEnemyHit(attackBox);
+		playing.checkEnemyHitCACO(attackBox);
+		
 	}
 
 	private void updateAttackBox() {
@@ -149,6 +163,8 @@ public class Player extends Entity {
 
 	private void setAnimation() {
 		int startAni = state;
+		if (state == HIT)
+			return;
 		if (moving)
 			state = running;
 		else
@@ -236,6 +252,13 @@ public class Player extends Entity {
 		airSpeed = jumpSpeed;
 
 	}
+	private void knockedup() {
+		if (inAir)
+			return;
+		inAir = true;
+		airSpeed = jumpSpeed/3;
+
+	}
 
 	private void resetInAir() {
 		inAir = false;
@@ -252,14 +275,23 @@ public class Player extends Entity {
 	}
 
 	public void changeHealth(int value) {
+		if (value < 0) {
+			if (state == HIT)
+				return;
+			else
+			{
+				state = HIT;
+				AniTick = 0;
+				AniIndex = 0;
+			}
+		}
+		if (flipW==-1)
+			pushBackDir = RIGHT;
+		else
+			pushBackDir = LEFT;
 		currentHealth += value;
-		if (currentHealth <= 0) {
-			currentHealth = 0;
-			// owarida
-		} else if (currentHealth >= maxHealth)
-			currentHealth = maxHealth;
+		currentHealth = Math.max(Math.min(currentHealth, maxHealth), 0);
 	}
-
 	private void LoadAnimation() {
 
 		image = LoadSave.GetSpriteAtlas("Dude_Monster_Idle_4.png");
@@ -368,5 +400,6 @@ public class Player extends Entity {
 		if (!IsEntityOnFloor(hitbox, lvlData))
 			inAir = true;
 	}
+	
 
 }

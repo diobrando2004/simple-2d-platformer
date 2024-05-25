@@ -96,8 +96,11 @@ public class Constants {
 			switch (enemy_type) {
 			case SKELE:
 				return 10;
+			case CACO:
+				return 10;
 			default:
 				return 1;
+			
 			}
 		}
 
@@ -105,6 +108,8 @@ public class Constants {
 			switch (enemy_type) {
 			case SKELE:
 				return 15;
+			case CACO:
+				return 50;
 			default:
 				return 0;
 			}

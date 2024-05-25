@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import gamestates.Playing;
+import main.Game;
 import utilz.LoadSave;
 
 public class EnemyManager {
@@ -63,11 +64,16 @@ public class EnemyManager {
 
 	public void drawCaco(Graphics g, int xLvOffset) {
 		for (Caco c : cacos) {
-			g.drawImage(cacoArr[c.GetState()][c.getAniIndex()], (int) c.getHitbox().x - xLvOffset,
-					(int) c.getHitbox().y, CACO_WIDTH, CACO_HEIGHT, null);
+			if (c.isActive()) {
+			g.drawImage(cacoArr[c.GetState()][c.getAniIndex()], (int) c.getHitbox().x-xLvOffset+85+c.flipX(),
+					(int) c.getHitbox().y -(int) (30 * Game.scale), CACO_WIDTH*c.flipW(), CACO_HEIGHT, null);
+			g.setColor(Color.red);
+			g.drawRect((int) c.getHitbox().x - xLvOffset, (int) c.getHitbox().y, (int) c.getHitbox().getWidth(),
+					(int) c.getHitbox().getHeight());
+			c.drawAttackBox(g, xLvOffset);
 		}
 	}
-
+	}
 	public void checkEnemyHit(Rectangle2D.Float attackBox) {
 		for (Skele sk : Skeles)
 			if (sk.isActive())
@@ -76,7 +82,15 @@ public class EnemyManager {
 					return;
 				}
 	}
-
+	
+	public void checkEnemyHitCACO(Rectangle2D.Float attackBox) {
+		for (Caco c : cacos)
+			if (c.isActive())
+				if (attackBox.intersects(c.getHitbox())) {
+					c.hurt(10);
+					return;
+				}
+	}
 	private void loadEnemyImgs() {
 		SkeleArr = new BufferedImage[5][13];
 		BufferedImage temp = LoadSave.GetSpriteAtlas("Skeleton enemy.png");

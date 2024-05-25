@@ -129,6 +129,9 @@ public class Playing extends State implements Statemethod {
 	public void checkEnemyHit(Rectangle2D.Float attackBox) {
 		enemyManager.checkEnemyHit(attackBox);
 	}
+	public void checkEnemyHitCACO(Rectangle2D.Float attackBox) {
+		enemyManager.checkEnemyHitCACO(attackBox);
+	}
 
 	public void mouseClicked(MouseEvent e) {
 		if (!gameOver)
