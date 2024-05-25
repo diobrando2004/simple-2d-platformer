@@ -51,7 +51,7 @@ public class EnemyManager {
 	private void drawSkele(Graphics g, int xlvlOffset) {
 		for (Skele sk : Skeles)
 			if (sk.isActive()) {
-				g.drawImage(SkeleArr[sk.getEnemyState()][sk.getAniIndex()],
+				g.drawImage(SkeleArr[sk.GetState()][sk.getAniIndex()],
 						(int) sk.getHitbox().x - xlvlOffset + 80 + sk.flipX(), (int) sk.getHitbox().y - 52,
 						64 * 2 * (sk.flipW()), 64 * 2, null);
 				g.setColor(Color.red);
@@ -63,7 +63,7 @@ public class EnemyManager {
 
 	public void drawCaco(Graphics g, int xLvOffset) {
 		for (Caco c : cacos) {
-			g.drawImage(cacoArr[c.getEnemyState()][c.getAniIndex()], (int) c.getHitbox().x - xLvOffset,
+			g.drawImage(cacoArr[c.GetState()][c.getAniIndex()], (int) c.getHitbox().x - xLvOffset,
 					(int) c.getHitbox().y, CACO_WIDTH, CACO_HEIGHT, null);
 		}
 	}

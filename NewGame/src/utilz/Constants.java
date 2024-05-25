@@ -4,7 +4,8 @@ import main.Game;
 
 public class Constants {
 	public static final int aniSpeed = 25;
-
+	public static final float gravity = 0.04f * Game.scale;
+	
 	public static class ObjectConstants {
 		public static final int HEART = 0;
 		public static final int STAMINA = 1;

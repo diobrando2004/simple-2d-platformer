@@ -13,7 +13,7 @@ public class Caco extends Enemy {
 
 	public Caco(float x, float y) {
 		super(x, y, CACO_WIDTH, CACO_HEIGHT, CACO);
-		inithitbox(x, y, (int) (49 * Game.scale), (int) (39 * Game.scale));
+		inithitbox((int) (49 * Game.scale), (int) (39 * Game.scale));
 
 	}
 
@@ -30,7 +30,7 @@ public class Caco extends Enemy {
 		if (inAir) {
 			updateInAir(lvlData);
 		} else {
-			switch (enemyState) {
+			switch (state) {
 			case CACO_IDLE:
 				if (canSeePlayer(lvlData, player))
 					turnTowardsPlayer(player);
