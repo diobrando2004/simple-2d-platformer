@@ -1,9 +1,12 @@
 package entities;
 
 import static utilz.Constants.aniSpeed;
+import static utilz.Constants.gravity;
+import static utilz.Constants.Direction.LEFT;
+import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.PlayerConstants.Falling;
-import static utilz.Constants.PlayerConstants.*;
 import static utilz.Constants.PlayerConstants.GetSpriteAmount;
+import static utilz.Constants.PlayerConstants.HIT;
 import static utilz.Constants.PlayerConstants.Idle;
 import static utilz.Constants.PlayerConstants.Jumping;
 import static utilz.Constants.PlayerConstants.attack;
@@ -13,11 +16,10 @@ import static utilz.HelpMethod.CanMoveHere;
 import static utilz.HelpMethod.GetEntityXPosNextToWall;
 import static utilz.HelpMethod.GetEntityYPosUnderRoofOrAboveFloor;
 import static utilz.HelpMethod.IsEntityOnFloor;
-import static utilz.Constants.gravity;
-import static utilz.Constants.Direction.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -30,13 +32,12 @@ public class Player extends Entity {
 	private BufferedImage[][] animations = new BufferedImage[15][8];
 	private boolean left, right, jump;
 	private boolean moving = false, attacking = false;
-	private boolean knockback=false;
-	int knockbakccounter =0;
+	private boolean knockback = false;
+	int knockbakccounter = 0;
 	private int[][] lvlData;
 	private float xDrawOffset = 6 * Game.scale;
 	private float yDrawOffset = 6 * Game.scale;
 	// ff
-
 
 	private float jumpSpeed = -2.25f * Game.scale;
 	private float fallSpeedAfterCollision = 0.5f * Game.scale;
@@ -62,10 +63,10 @@ public class Player extends Entity {
 	public Player(float x, float y, int width, int height, Playing playing) {
 		super(x, y, width, height);
 		this.playing = playing;
-		this.maxHealth =10000;
+		this.maxHealth = 10000;
 		this.currentHealth = maxHealth;
 		this.state = Idle;
-		this.WalkSpeed =2.0f;
+		this.WalkSpeed = 2.0f;
 		LoadAnimation();
 		LoadAnimation1();
 		LoadAnimation2();
@@ -74,9 +75,16 @@ public class Player extends Entity {
 		LoadAnimation5();
 		LoadAnimation6();
 		LoadAnimation7();
-		inithitbox( width * 5 / 8, height * 6 / 8);
+		inithitbox(width * 5 / 8, height * 6 / 8);
 		initAttackBox();
 
+	}
+
+	public void setSpawn(Point spawn) {
+		this.x = spawn.x;
+		this.y = spawn.y;
+		hitbox.x = x;
+		hitbox.y = y;
 	}
 
 	private void initAttackBox() {
@@ -86,23 +94,23 @@ public class Player extends Entity {
 	public void update() {
 		updateHealthBar();
 		if (currentHealth <= 0) {
-	
-		playing.setGameOver(true);
+
+			playing.setGameOver(true);
 			return;
 		}
 		updateAttackBox();
 		if (state == HIT) {
 			if (AniIndex <= GetSpriteAmount(state) - 3) {
 				knockedup();
-				if(inAir)
+				if (inAir)
 					pushBack(pushBackDir, lvlData, 1.25f);
-			
+
 			}
-				
+
 			updatePushBackDrawOffset();
-			state =Idle;
-		}else 
-		updatePos();
+			state = Idle;
+		} else
+			updatePos();
 		if (attacking)
 			checkAttack();
 		updateAnimationPick();
@@ -115,7 +123,7 @@ public class Player extends Entity {
 		attackChecked = true;
 		playing.checkEnemyHit(attackBox);
 		playing.checkEnemyHitCACO(attackBox);
-		
+
 	}
 
 	private void updateAttackBox() {
@@ -139,8 +147,6 @@ public class Player extends Entity {
 		drawAttackBox(g, lvlOffset);
 		drawUI(g);
 	}
-
-
 
 	private void drawUI(Graphics g) {
 		g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
@@ -252,11 +258,12 @@ public class Player extends Entity {
 		airSpeed = jumpSpeed;
 
 	}
+
 	private void knockedup() {
 		if (inAir)
 			return;
 		inAir = true;
-		airSpeed = jumpSpeed/3;
+		airSpeed = jumpSpeed / 3;
 
 	}
 
@@ -278,20 +285,20 @@ public class Player extends Entity {
 		if (value < 0) {
 			if (state == HIT)
 				return;
-			else
-			{
+			else {
 				state = HIT;
 				AniTick = 0;
 				AniIndex = 0;
 			}
 		}
-		if (flipW==-1)
+		if (flipW == -1)
 			pushBackDir = RIGHT;
 		else
 			pushBackDir = LEFT;
 		currentHealth += value;
 		currentHealth = Math.max(Math.min(currentHealth, maxHealth), 0);
 	}
+
 	private void LoadAnimation() {
 
 		image = LoadSave.GetSpriteAtlas("Dude_Monster_Idle_4.png");
@@ -373,8 +380,6 @@ public class Player extends Entity {
 		this.left = left;
 	}
 
-
-
 	public boolean isRight() {
 		return right;
 	}
@@ -382,7 +387,6 @@ public class Player extends Entity {
 	public void setRight(boolean right) {
 		this.right = right;
 	}
-
 
 	public void setJump(boolean Jump) {
 		this.jump = Jump;
@@ -400,6 +404,5 @@ public class Player extends Entity {
 		if (!IsEntityOnFloor(hitbox, lvlData))
 			inAir = true;
 	}
-	
 
 }

@@ -2,8 +2,10 @@ package levels;
 
 import static utilz.HelpMethod.GetCacos;
 import static utilz.HelpMethod.GetLevelData;
+import static utilz.HelpMethod.GetPlayerSpawn;
 import static utilz.HelpMethod.getSkele;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -21,13 +23,20 @@ public class Level {
 	private int lvlTilesWide;
 	private int maxTilesOffset;
 	private int maxLvlOffsetX;
+	private Point playerSpawn;
 
 	public Level(BufferedImage img) {
 		this.img = img;
 		createLevelData();
 		createEmenies();
 		calcLvlOffsets();
+		calcPlayerSpawn();
 //		creatEndingKeys();
+
+	}
+
+	private void calcPlayerSpawn() {
+		playerSpawn = GetPlayerSpawn(img);
 
 	}
 
@@ -73,6 +82,10 @@ public class Level {
 
 	public ArrayList<EndingKey> getEndingKeys() {
 		return keys;
+	}
+
+	public Point getPlayerSpawn() {
+		return playerSpawn;
 	}
 
 }
