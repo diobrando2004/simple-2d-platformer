@@ -177,7 +177,7 @@ public class Playing extends State implements Statemethod {
 				player.setLeft(true);
 				break;
 			case KeyEvent.VK_S:
-				player.setDown(true);
+				
 
 				break;
 			case KeyEvent.VK_D:
@@ -210,7 +210,7 @@ public class Playing extends State implements Statemethod {
 				player.setLeft(false);
 				break;
 			case KeyEvent.VK_S:
-				player.setDown(false);
+				
 				break;
 			case KeyEvent.VK_D:
 				player.setRight(false);

@@ -1,5 +1,6 @@
 package entities;
 
+//ihm
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstant.ATTACK;
 import static utilz.Constants.EnemyConstant.HIT;
@@ -9,19 +10,16 @@ import static utilz.Constants.EnemyConstant.SKELE;
 import static utilz.Constants.EnemyConstant.SKELE_HEIGHT;
 import static utilz.Constants.EnemyConstant.SKELE_WIDTH;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
 import main.Game;
 
 public class Skele extends Enemy {
-	private Rectangle2D.Float attackBox;
 	private int attackboxOffsetX;
 
 	public Skele(float x, float y) {
 		super(x, y, SKELE_WIDTH, SKELE_HEIGHT, SKELE);
-		inithitbox(x, y, (int) 24 * Game.scale, (int) 28 * Game.scale);
+		inithitbox((int) 24 * Game.scale, (int) 28 * Game.scale);
 		initAttackBox();
 	}
 
@@ -50,21 +48,22 @@ public class Skele extends Enemy {
 		if (inAir) {
 			updateInAir(lvlData);
 		} else {
-			switch (enemyState) {
+			switch (state) {
 			case IDLE:
 				newState(RUNNING);
 				break;
 			case RUNNING:
-				if (canSeePlayer(lvlData, player))
+				if (canSeePlayer(lvlData, player)) {
 					turnTowardsPlayer(player);
-				if (isPlayerCloseForAttack(player))
-					newState(ATTACK);
+					if (isPlayerCloseForAttack(player))
+						newState(ATTACK);
+				}
 				move(lvlData);
 				break;
 			case ATTACK:
-				if (aniIndex == 0)
+				if (AniIndex == 0)
 					attackChecked = false;
-				if (aniIndex == 4 || aniIndex == 5 || aniIndex == 8 || aniIndex == 9 && !attackChecked)
+				if (AniIndex == 4 || AniIndex == 5 || AniIndex == 8 || AniIndex == 9 && !attackChecked)
 					checkEnemyHit(attackBox, player);
 				break;
 			case HIT:
@@ -72,11 +71,6 @@ public class Skele extends Enemy {
 				break;
 			}
 		}
-	}
-
-	public void drawAttackBox(Graphics g, int lvlOffset) {
-		g.setColor(Color.red);
-		g.drawRect((int) (attackBox.x - lvlOffset), (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
 	}
 
 	public int flipX() {
