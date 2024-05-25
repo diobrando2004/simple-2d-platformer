@@ -17,6 +17,7 @@ import main.Game;
 public class LoadSave {
 	public static final String CACO_SPRITE = "Cacodaemon Sprite Sheet.png";
 	public static final String ENDING_KEY_ATLAS = "GameItemsAnims-Sheet.png";
+	public static final String COMPLETED_IMG = "complete_sprites.png";
 
 	public static BufferedImage GetSpriteAtlas(String filename) {
 		BufferedImage image = null;
