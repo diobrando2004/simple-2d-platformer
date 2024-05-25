@@ -25,6 +25,7 @@ public class Game implements Runnable {
 	private LevelManager levelManager;
 
 	public Game() {
+
 		InitClasses();
 		gamePanel = new GamePanel(this);
 		gameWindow = new GameWindow(gamePanel);

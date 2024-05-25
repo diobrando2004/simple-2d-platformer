@@ -1,18 +1,13 @@
 package utilz;
 
-import static utilz.Constants.EnemyConstant.CACO;
-
-import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
-
-import entities.Caco;
-import entities.Skele;
-import main.Game;
 
 public class LoadSave {
 	public static final String CACO_SPRITE = "Cacodaemon Sprite Sheet.png";
@@ -32,46 +27,50 @@ public class LoadSave {
 		return image;
 	}
 
-	public static ArrayList<Skele> getSkele() {
-		BufferedImage img = LoadSave.GetSpriteAtlas("level_one_data.png");
-		ArrayList<Skele> list = new ArrayList<>();
-		for (int j = 0; j < img.getHeight(); j++)
-			for (int i = 0; i < img.getWidth(); i++) {
-				Color color = new Color(img.getRGB(i, j));
-				int value = color.getGreen();
-				if (value == 0)
-					list.add(new Skele(i * Game.TILES_SIZE, (int) j * Game.TILES_SIZE));
+	public static BufferedImage[] GetAllLevels() {
+		URL url = LoadSave.class.getResource("/lvls");
+		File file = null;
+		try {
+			file = new File(url.toURI());
+		} catch (URISyntaxException e) {
 
-			}
-		return list;
-	}
+			e.printStackTrace();
+		}
+		File[] files = file.listFiles();
+		File[] filesSorted = new File[files.length];
 
-	public static int[][] GetLevelData() {
-		BufferedImage img = LoadSave.GetSpriteAtlas("level_one_data.png");
-		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
-		for (int j = 0; j < img.getHeight(); j++)
-			for (int i = 0; i < img.getWidth(); i++) {
-				Color color = new Color(img.getRGB(i, j));
-				int value = color.getRed();
-				if (value >= 48)
-					value = 0;
-				lvlData[j][i] = value;
-			}
-		return lvlData;
-	}
-
-	public static ArrayList<Caco> GetCacos() {
-		BufferedImage img = LoadSave.GetSpriteAtlas("level_one_data.png");
-		ArrayList<Caco> list = new ArrayList<>();
-		for (int j = 0; j < img.getHeight(); j++) {
-			for (int i = 0; i < img.getWidth(); i++) {
-				Color color = new Color(img.getRGB(i, j));
-				int value = color.getGreen();
-				if (value == CACO) {
-					list.add(new Caco((int) (i * Game.TILES_SIZE), (int) (j * Game.TILES_SIZE)));
+		for (int i = 0; i < filesSorted.length; i++) {
+			for (int j = 0; j < files.length; j++) {
+				if (files[j].getName().equals("" + (i + 1) + ".png")) {
+					filesSorted[i] = files[j];
 				}
 			}
 		}
-		return list;
+
+		BufferedImage[] imgs = new BufferedImage[filesSorted.length];
+		for (int i = 0; i < imgs.length; i++) {
+			try {
+				imgs[i] = ImageIO.read(filesSorted[i]);
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+		return imgs;
 	}
+
+//	public static int[][] GetLevelData() {
+//		BufferedImage img = LoadSave.GetSpriteAtlas(as);
+//		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
+//		for (int j = 0; j < img.getHeight(); j++)
+//			for (int i = 0; i < img.getWidth(); i++) {
+//				Color color = new Color(img.getRGB(i, j));
+//				int value = color.getRed();
+//				if (value >= 48)
+//					value = 0;
+//				lvlData[j][i] = value;
+//			}
+//		return lvlData;
+//	}
+
 }

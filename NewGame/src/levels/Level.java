@@ -1,16 +1,50 @@
 package levels;
 
+import static utilz.HelpMethod.GetCacos;
+import static utilz.HelpMethod.GetLevelData;
+import static utilz.HelpMethod.getSkele;
+
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import entities.Caco;
+import entities.Skele;
+import main.Game;
 import objects.EndingKey;
 
 public class Level {
+	private BufferedImage img;
 	private int[][] lvlData;
+	private ArrayList<Skele> skeles;
+	private ArrayList<Caco> cacos;
 	private ArrayList<EndingKey> keys;
+	private int lvlTilesWide;
+	private int maxTilesOffset;
+	private int maxLvlOffsetX;
 
-	public Level(int[][] lvlData) {
-		this.lvlData = lvlData;
+	public Level(BufferedImage img) {
+		this.img = img;
+		createLevelData();
+		createEmenies();
+		calcLvlOffsets();
 //		creatEndingKeys();
+
+	}
+
+	private void calcLvlOffsets() {
+		lvlTilesWide = img.getWidth();
+		maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
+		maxLvlOffsetX = Game.TILES_SIZE * maxTilesOffset;
+	}
+
+	private void createEmenies() {
+		skeles = getSkele(img);
+		cacos = GetCacos(img);
+
+	}
+
+	private void createLevelData() {
+		lvlData = GetLevelData(img);
 	}
 
 //	private void creatEndingKeys() {
@@ -23,6 +57,18 @@ public class Level {
 
 	public int[][] getLevelData() {
 		return lvlData;
+	}
+
+	public int getLvlOffset() {
+		return maxLvlOffsetX;
+	}
+
+	public ArrayList<Skele> getSkeles() {
+		return skeles;
+	}
+
+	public ArrayList<Caco> getCacos() {
+		return cacos;
 	}
 
 	public ArrayList<EndingKey> getEndingKeys() {

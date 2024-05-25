@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import gamestates.Playing;
+import levels.Level;
 import main.Game;
 import utilz.LoadSave;
 
@@ -25,21 +26,31 @@ public class EnemyManager {
 	public EnemyManager(Playing playing) {
 		this.playing = playing;
 		loadEnemyImgs();
-		addEnemies();
 	}
 
-	private void addEnemies() {
-		Skeles = LoadSave.getSkele();
-		cacos = LoadSave.GetCacos();
+	public void loadEnemies(Level level) {
+		Skeles = level.getSkeles();
+		cacos = level.getCacos();
 
 	}
 
 	public void update(int[][] lvlData, Player player) {
+		boolean isAnyActive = false;
 		for (Skele sk : Skeles)
-			if (sk.isActive())
+			if (sk.isActive()) {
 				sk.update(lvlData, player);
+				isAnyActive = true;
+			}
+
 		for (Caco c : cacos) {
-			c.update(lvlData, player);
+			if (c.isActive()) {
+				c.update(lvlData, player);
+				isAnyActive = true;
+			}
+
+		}
+		if (!isAnyActive) {
+			playing.setLevelCompleted(true);
 		}
 	}
 
