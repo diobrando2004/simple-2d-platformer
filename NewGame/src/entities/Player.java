@@ -12,10 +12,12 @@ import static utilz.Constants.PlayerConstants.Jumping;
 import static utilz.Constants.PlayerConstants.attack;
 import static utilz.Constants.PlayerConstants.running;
 import static utilz.Constants.PlayerConstants.walkattack;
+import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethod.CanMoveHere;
 import static utilz.HelpMethod.GetEntityXPosNextToWall;
 import static utilz.HelpMethod.GetEntityYPosUnderRoofOrAboveFloor;
 import static utilz.HelpMethod.IsEntityOnFloor;
+
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -63,7 +65,7 @@ public class Player extends Entity {
 	public Player(float x, float y, int width, int height, Playing playing) {
 		super(x, y, width, height);
 		this.playing = playing;
-		this.maxHealth = 10000;
+		this.maxHealth = 2500;
 		this.currentHealth = maxHealth;
 		this.state = Idle;
 		this.WalkSpeed = 2.0f;
@@ -94,8 +96,17 @@ public class Player extends Entity {
 	public void update() {
 		updateHealthBar();
 		if (currentHealth <= 0) {
-
+			if(state != DEAD) {
+				state= DEAD;
+				AniTick = 0;
+				AniIndex = 0;
+				playing.setPlayerDying(true);
+//			playing.setGameOver(true);
+		} else if(AniIndex==GetSpriteAmount(DEAD)-1 && AniTick>= aniSpeed-1) {
 			playing.setGameOver(true);
+		}else {
+			updateAnimationPick();
+		}
 			return;
 		}
 		updateAttackBox();
