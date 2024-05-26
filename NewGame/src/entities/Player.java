@@ -123,10 +123,18 @@ public class Player extends Entity {
 			state = Idle;
 		} else
 			updatePos();
+		if (moving) {
+			checkHeartTouched();
+		}
 		if (attacking)
 			checkAttack();
 		updateAnimationPick();
 		setAnimation();
+	}
+
+	private void checkHeartTouched() {
+		playing.checkHeartTouched(hitbox);
+
 	}
 
 	private void checkAttack() {

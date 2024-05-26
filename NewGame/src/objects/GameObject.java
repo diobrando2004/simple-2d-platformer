@@ -1,7 +1,7 @@
 package objects;
 
 import static utilz.Constants.aniSpeed;
-import static utilz.Constants.ObjectConstants.ENDING_KEY;
+import static utilz.Constants.ObjectConstants.HEART;
 import static utilz.Constants.ObjectConstants.getSpriteAmount;
 
 import java.awt.Color;
@@ -29,10 +29,8 @@ public class GameObject {
 			aniIndex++;
 			if (aniIndex >= getSpriteAmount(objType)) {
 				aniIndex = 0;
-				if (objType == ENDING_KEY) {
+				if (objType == HEART) {
 					doAnimation = false;
-				} else {
-					doAnimation = true;
 				}
 			}
 		}
@@ -42,7 +40,13 @@ public class GameObject {
 		aniIndex = 0;
 		aniTick = 0;
 		active = true;
-		doAnimation = true;
+
+		if (objType == HEART) {
+			doAnimation = false;
+		} else {
+			doAnimation = true;
+		}
+
 	}
 
 	protected void inithitbox(float width, float height) {

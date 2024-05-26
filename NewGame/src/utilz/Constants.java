@@ -5,7 +5,7 @@ import main.Game;
 public class Constants {
 	public static final int aniSpeed = 25;
 	public static final float gravity = 0.04f * Game.scale;
-	
+
 	public static class ObjectConstants {
 		public static final int HEART = 0;
 		public static final int STAMINA = 1;
@@ -22,13 +22,13 @@ public class Constants {
 
 		public static final int HEART_WIDTH_DEFAULT = 16;
 		public static final int HEART_HEIGHT_DEFAULT = 16;
-		public static final int HEART_WIDTH = (int) (Game.scale * ENDING_KEY_WIDTH_DEFAULT);
-		public static final int HEART_HEIGHT = (int) (Game.scale * ENDING_KEY_HEIGHT_DEFAULT);
+		public static final int HEART_WIDTH = (int) (Game.scale * HEART_WIDTH_DEFAULT);
+		public static final int HEART_HEIGHT = (int) (Game.scale * HEART_HEIGHT_DEFAULT);
+		public static final int HEART_VALUE = 1500;
 
 		public static int getSpriteAmount(int object_type) {
 			switch (object_type) {
-			case ENDING_KEY:
-			case HEAL:
+			case HEART:
 				return 12;
 			}
 			return 1;
@@ -100,7 +100,7 @@ public class Constants {
 				return 10;
 			default:
 				return 1;
-			
+
 			}
 		}
 

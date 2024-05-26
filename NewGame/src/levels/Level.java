@@ -12,14 +12,16 @@ import java.util.ArrayList;
 import entities.Caco;
 import entities.Skele;
 import main.Game;
-import objects.EndingKey;
+import objects.Heart;
+import utilz.HelpMethod;
 
 public class Level {
 	private BufferedImage img;
 	private int[][] lvlData;
 	private ArrayList<Skele> skeles;
 	private ArrayList<Caco> cacos;
-	private ArrayList<EndingKey> keys;
+//	private ArrayList<EndingKey> keys;
+	private ArrayList<Heart> hearts;
 	private int lvlTilesWide;
 	private int maxTilesOffset;
 	private int maxLvlOffsetX;
@@ -29,9 +31,15 @@ public class Level {
 		this.img = img;
 		createLevelData();
 		createEmenies();
+		createHearts();
 		calcLvlOffsets();
 		calcPlayerSpawn();
 //		creatEndingKeys();
+
+	}
+
+	private void createHearts() {
+		hearts = HelpMethod.getHearts(img);
 
 	}
 
@@ -80,8 +88,11 @@ public class Level {
 		return cacos;
 	}
 
-	public ArrayList<EndingKey> getEndingKeys() {
-		return keys;
+//	public ArrayList<EndingKey> getEndingKeys() {
+//		return keys;
+//	}
+	public ArrayList<Heart> getHearts() {
+		return hearts;
 	}
 
 	public Point getPlayerSpawn() {

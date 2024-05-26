@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 
 public class LoadSave {
 	public static final String CACO_SPRITE = "Cacodaemon Sprite Sheet.png";
-	public static final String ENDING_KEY_ATLAS = "GameItemsAnims-Sheet.png";
+	public static final String ITEMS_ATLAS = "GameItemsAnims-Sheet.png";
 	public static final String COMPLETED_IMG = "completed_sprite.png";
 	public static final String DEATH_SCREEN = "death_screen.png";
 

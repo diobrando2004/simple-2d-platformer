@@ -43,6 +43,7 @@ public class Playing extends State implements Statemethod {
 	private boolean gameOver;
 	private boolean lvlCompleted = false;
 	private boolean playerDying;
+
 	public Playing(Game game) {
 		super(game);
 		InitClasses();
@@ -64,6 +65,7 @@ public class Playing extends State implements Statemethod {
 
 	private void loadStartLevel() {
 		enemyManager.loadEnemies(levelManager.getCurrentLevel());
+		objectManager.loadObjects(levelManager.getCurrentLevel());
 	}
 
 	private void calcLvlOffset() {
@@ -74,7 +76,7 @@ public class Playing extends State implements Statemethod {
 	private void InitClasses() {
 		levelManager = new LevelManager(game);
 		enemyManager = new EnemyManager(this);
-//		objectManager = new ObjectManager(this);
+		objectManager = new ObjectManager(this);
 		player = new Player(200, 200, 64, 64, this);
 		player.loadlvlData(levelManager.getCurrentLevel().getLevelData());
 		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
@@ -88,15 +90,13 @@ public class Playing extends State implements Statemethod {
 			pauseOverlay.update();
 		} else if (lvlCompleted) {
 			levelCompletedOverlay.update();
-		}else if(gameOver) {
+		} else if (gameOver) {
 			gameOverOverlay.update();
-		}
-		else if(playerDying) {
+		} else if (playerDying) {
 			player.update();
-		}
-		else if (!gameOver) {
+		} else if (!gameOver) {
 			levelManager.update();
-//			objectManager.update();
+			objectManager.update();
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			checkCloseToBordder();
@@ -123,7 +123,7 @@ public class Playing extends State implements Statemethod {
 		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
-//		objectManager.draw(g, xLvlOffset);
+		objectManager.draw(g, xLvlOffset);
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 150));
 			g.fillRect(0, 0, game.GAME_WIDTH, game.GAME_HEIGHT);
@@ -149,10 +149,11 @@ public class Playing extends State implements Statemethod {
 		// reset playing, enemy
 		gameOver = false;
 		paused = false;
-		playerDying =false;
+		playerDying = false;
 		lvlCompleted = false;
 		player.resetAll();
 		enemyManager.resetAllEnemies();
+		objectManager.resetAllObjects();
 	}
 
 	public void setGameOver(boolean gameOver) {
@@ -165,6 +166,11 @@ public class Playing extends State implements Statemethod {
 
 	public void checkEnemyHitCACO(Rectangle2D.Float attackBox) {
 		enemyManager.checkEnemyHitCACO(attackBox);
+	}
+
+	public void checkHeartTouched(Rectangle2D.Float hitbox) {
+		objectManager.checkObjectTouched(hitbox);
+
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -187,7 +193,7 @@ public class Playing extends State implements Statemethod {
 			else if (lvlCompleted) {
 				levelCompletedOverlay.mousePressed(e);
 			}
-		}else {
+		} else {
 			gameOverOverlay.mousePressed(e);
 		}
 
@@ -200,7 +206,7 @@ public class Playing extends State implements Statemethod {
 			else if (lvlCompleted) {
 				levelCompletedOverlay.mouseReleased(e);
 			}
-		}else {
+		} else {
 			gameOverOverlay.mouseReleased(e);
 		}
 
@@ -213,7 +219,7 @@ public class Playing extends State implements Statemethod {
 			else if (lvlCompleted) {
 				levelCompletedOverlay.mouseMoved(e);
 			}
-		}else {
+		} else {
 			gameOverOverlay.mouseMoved(e);
 		}
 
@@ -307,6 +313,7 @@ public class Playing extends State implements Statemethod {
 
 	public void setPlayerDying(boolean playerDying) {
 		this.playerDying = playerDying;
-		
+
 	}
+
 }

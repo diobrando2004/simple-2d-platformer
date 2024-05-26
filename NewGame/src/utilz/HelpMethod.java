@@ -1,7 +1,7 @@
 package utilz;
 
 import static utilz.Constants.EnemyConstant.CACO;
-import static utilz.Constants.ObjectConstants.ENDING_KEY;
+import static utilz.Constants.ObjectConstants.HEART;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import entities.Caco;
 import entities.Skele;
 import main.Game;
-import objects.EndingKey;
+import objects.Heart;
 
 public class HelpMethod {
 	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) {
@@ -177,15 +177,29 @@ public class HelpMethod {
 
 	}
 
-	public static ArrayList<EndingKey> getKeys(BufferedImage img) {
+//	public static ArrayList<EndingKey> getKeys(BufferedImage img) {
+//
+//		ArrayList<EndingKey> list = new ArrayList<>();
+//		for (int j = 0; j < img.getHeight(); j++)
+//			for (int i = 0; i < img.getWidth(); i++) {
+//				Color color = new Color(img.getRGB(i, j));
+//				int value = color.getBlue();
+//				if (value == ENDING_KEY)
+//					list.add(new EndingKey((int) i * Game.TILES_SIZE, (int) j * Game.TILES_SIZE, ENDING_KEY));
+//
+//			}
+//		return list;
+//	}
 
-		ArrayList<EndingKey> list = new ArrayList<>();
+	public static ArrayList<Heart> getHearts(BufferedImage img) {
+
+		ArrayList<Heart> list = new ArrayList<>();
 		for (int j = 0; j < img.getHeight(); j++)
 			for (int i = 0; i < img.getWidth(); i++) {
 				Color color = new Color(img.getRGB(i, j));
 				int value = color.getBlue();
-				if (value == ENDING_KEY)
-					list.add(new EndingKey((int) i * Game.TILES_SIZE, (int) j * Game.TILES_SIZE, ENDING_KEY));
+				if (value == HEART)
+					list.add(new Heart((int) i * Game.TILES_SIZE, (int) j * Game.TILES_SIZE, HEART));
 
 			}
 		return list;
