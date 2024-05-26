@@ -1,12 +1,20 @@
 package entities;
 
 import static utilz.Constants.aniSpeed;
+import static utilz.Constants.gravity;
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
 import static utilz.Constants.EnemyConstant.ATTACK;
+import static utilz.Constants.EnemyConstant.CACO;
+import static utilz.Constants.EnemyConstant.CACO_ATTACK;
+import static utilz.Constants.EnemyConstant.CACO_DEAD;
+import static utilz.Constants.EnemyConstant.CACO_HIT;
+import static utilz.Constants.EnemyConstant.CACO_IDLE;
+import static utilz.Constants.EnemyConstant.CACO_RUNNING;
 import static utilz.Constants.EnemyConstant.DEAD;
 import static utilz.Constants.EnemyConstant.HIT;
 import static utilz.Constants.EnemyConstant.IDLE;
+import static utilz.Constants.EnemyConstant.SKELE;
 import static utilz.Constants.EnemyConstant.getEnemyDmg;
 import static utilz.Constants.EnemyConstant.getMaxHealth;
 import static utilz.Constants.EnemyConstant.getSpriteAmount;
@@ -15,15 +23,13 @@ import static utilz.HelpMethod.GetEntityYPosUnderRoofOrAboveFloorEnemy;
 import static utilz.HelpMethod.IsEntityOnFloor;
 import static utilz.HelpMethod.IsSightClear;
 import static utilz.HelpMethod.isFloor;
-import static utilz.Constants.gravity;
-import static utilz.Constants.EnemyConstant.*;
 
 import java.awt.geom.Rectangle2D;
 
 import main.Game;
 
 public abstract class Enemy extends Entity {
-	protected int enemyType;	
+	protected int enemyType;
 	protected boolean firstUpdate = true;
 //hh
 
@@ -80,21 +86,20 @@ public abstract class Enemy extends Entity {
 	}
 
 	public void hurt(int amount) {
-		if(enemyType == SKELE) {
-		currentHealth -= amount;
-		if (currentHealth <= 0)
-			newState(DEAD);
-		else
-			newState(HIT);
-		}
-		else if(enemyType== CACO) {
+		if (enemyType == SKELE) {
+			currentHealth -= amount;
+			if (currentHealth <= 0)
+				newState(DEAD);
+			else
+				newState(HIT);
+		} else if (enemyType == CACO) {
 			currentHealth -= amount;
 			if (currentHealth <= 0)
 				newState(CACO_DEAD);
 			else
 				newState(CACO_HIT);
-			}
 		}
+	}
 
 	protected void checkEnemyHit(Rectangle2D.Float attackBox, Player player) {
 		if (attackBox.intersects(player.hitbox)) {
@@ -120,6 +125,7 @@ public abstract class Enemy extends Entity {
 			}
 		}
 	}
+
 	protected void updateAnimationTickCACO() {
 		AniTick++;
 		if (AniTick >= aniSpeed) {
@@ -178,11 +184,18 @@ public abstract class Enemy extends Entity {
 		hitbox.y = y;
 		firstUpdate = true;
 		currentHealth = maxHealth;
-		newState(IDLE);
+
+		switch (enemyType) {
+		case SKELE:
+			newState(IDLE);
+			break;
+		case CACO:
+			newState(CACO_RUNNING);
+			break;
+		}
 		active = true;
 		airSpeed = 0;
 	}
-
 
 	public boolean isActive() {
 		return active;

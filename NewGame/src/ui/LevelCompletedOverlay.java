@@ -32,8 +32,8 @@ public class LevelCompletedOverlay {
 
 	private void initImg() {
 		img = LoadSave.GetSpriteAtlas(LoadSave.COMPLETED_IMG);
-		bgW = (int) (img.getWidth() * 0.48f);
-		bgH = (int) (img.getHeight() * 0.48f);
+		bgW = (int) (img.getWidth() * Game.scale);
+		bgH = (int) (img.getHeight() * Game.scale);
 		bgX = Game.GAME_WIDTH / 2 - bgW / 2;
 		bgY = (int) (75 * Game.scale);
 	}
