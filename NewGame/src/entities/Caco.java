@@ -14,16 +14,18 @@ import main.Game;
 
 public class Caco extends Enemy {
 	private int attackboxOffsetX;
+
 	public Caco(float x, float y) {
-		
+
 		super(x, y, CACO_WIDTH, CACO_HEIGHT, CACO);
 		WalkSpeed = 0.5f * Game.scale;
 		inithitbox((int) 39 * Game.scale, (int) 30 * Game.scale);
 		initAttackBox();
 	}
+
 	private void initAttackBox() {
 		attackBox = new Rectangle2D.Float(x, y, (int) 45 * Game.scale, (int) 30 * Game.scale);
-		attackboxOffsetX = (int) (Game.scale *5);
+		attackboxOffsetX = (int) (Game.scale * 5);
 
 	}
 
@@ -32,6 +34,7 @@ public class Caco extends Enemy {
 		updateAnimationTickCACO();
 		updateAttackBox();
 	}
+
 	private void updateAttackBox() {
 		attackBox.x = hitbox.x - attackboxOffsetX;
 		attackBox.y = hitbox.y;
@@ -47,18 +50,19 @@ public class Caco extends Enemy {
 		} else {
 			switch (state) {
 			case CACO_IDLE:
-				if (canSeePlayer(lvlData, player))
+				if (canSeePlayer(lvlData, player)) {
 					turnTowardsPlayer(player);
-	
-				if (isPlayerCloseForAttack(player))
-					newState(CACO_ATTACK);
+
+					if (isPlayerCloseForAttack(player))
+						newState(CACO_ATTACK);
+				}
 				move(lvlData);
 				break;
-		case CACO_ATTACK:
+			case CACO_ATTACK:
 				if (AniIndex == 0)
 					attackChecked = false;
-				if (AniIndex >=0 && AniIndex<= 5 && !attackChecked)
-					checkEnemyHit(attackBox,player);
+				if (AniIndex >= 0 && AniIndex <= 5 && !attackChecked)
+					checkEnemyHit(attackBox, player);
 				break;
 			case CACO_HIT:
 
@@ -66,6 +70,7 @@ public class Caco extends Enemy {
 			}
 		}
 	}
+
 	public int flipX() {
 		if (walkDir == RIGHT)
 			return -100;
