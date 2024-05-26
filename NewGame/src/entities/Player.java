@@ -4,6 +4,7 @@ import static utilz.Constants.aniSpeed;
 import static utilz.Constants.gravity;
 import static utilz.Constants.Direction.LEFT;
 import static utilz.Constants.Direction.RIGHT;
+import static utilz.Constants.PlayerConstants.DEAD;
 import static utilz.Constants.PlayerConstants.Falling;
 import static utilz.Constants.PlayerConstants.GetSpriteAmount;
 import static utilz.Constants.PlayerConstants.HIT;
@@ -12,12 +13,10 @@ import static utilz.Constants.PlayerConstants.Jumping;
 import static utilz.Constants.PlayerConstants.attack;
 import static utilz.Constants.PlayerConstants.running;
 import static utilz.Constants.PlayerConstants.walkattack;
-import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethod.CanMoveHere;
 import static utilz.HelpMethod.GetEntityXPosNextToWall;
 import static utilz.HelpMethod.GetEntityYPosUnderRoofOrAboveFloor;
 import static utilz.HelpMethod.IsEntityOnFloor;
-
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -94,20 +93,21 @@ public class Player extends Entity {
 	}
 
 	public void update() {
-		if(hitbox.y+hitbox.height+1>= Game.GAME_HEIGHT) currentHealth = 0;
+		if (hitbox.y + hitbox.height + 1 >= Game.GAME_HEIGHT)
+			currentHealth = 0;
 		updateHealthBar();
 		if (currentHealth <= 0) {
-			if(state != DEAD) {
-				state= DEAD;
+			if (state != DEAD) {
+				state = DEAD;
 				AniTick = 0;
 				AniIndex = 0;
 				playing.setPlayerDying(true);
 //			playing.setGameOver(true);
-		} else if(AniIndex==GetSpriteAmount(DEAD)-1 && AniTick>= aniSpeed-1) {
-			playing.setGameOver(true);
-		}else {
-			updateAnimationPick();
-		}
+			} else if (AniIndex == GetSpriteAmount(DEAD) - 1 && AniTick >= aniSpeed - 1) {
+				playing.setGameOver(true);
+			} else {
+				updateAnimationPick();
+			}
 			return;
 		}
 		updateAttackBox();
