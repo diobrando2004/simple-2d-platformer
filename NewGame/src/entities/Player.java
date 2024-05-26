@@ -94,6 +94,7 @@ public class Player extends Entity {
 	}
 
 	public void update() {
+		if(hitbox.y+hitbox.height+1>= Game.GAME_HEIGHT) currentHealth = 0;
 		updateHealthBar();
 		if (currentHealth <= 0) {
 			if(state != DEAD) {
