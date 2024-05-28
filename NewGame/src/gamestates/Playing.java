@@ -227,6 +227,9 @@ public class Playing extends State implements Statemethod {
 
 	public void setLevelCompleted(boolean levelCompleted) {
 		this.lvlCompleted = levelCompleted;
+		if (levelCompleted) {
+			game.getAudioPlayer().lvlCompleted();
+		}
 	}
 
 	public void setMaxLvlOffset(int lvlOffset) {
@@ -314,6 +317,10 @@ public class Playing extends State implements Statemethod {
 	public void setPlayerDying(boolean playerDying) {
 		this.playerDying = playerDying;
 
+	}
+
+	public LevelManager getLevelManager() {
+		return levelManager;
 	}
 
 }

@@ -24,6 +24,7 @@ import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import audio.AudioPlayer;
 import gamestates.Playing;
 import main.Game;
 import utilz.LoadSave;
@@ -102,9 +103,11 @@ public class Player extends Entity {
 				AniTick = 0;
 				AniIndex = 0;
 				playing.setPlayerDying(true);
-//			playing.setGameOver(true);
+				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.DIE);
 			} else if (AniIndex == GetSpriteAmount(DEAD) - 1 && AniTick >= aniSpeed - 1) {
 				playing.setGameOver(true);
+				playing.getGame().getAudioPlayer().stopSong();
+				playing.getGame().getAudioPlayer().playEffect(AudioPlayer.GAMEOVER);
 			} else {
 				updateAnimationPick();
 			}
@@ -143,6 +146,7 @@ public class Player extends Entity {
 		attackChecked = true;
 		playing.checkEnemyHit(attackBox);
 		playing.checkEnemyHitCACO(attackBox);
+		playing.getGame().getAudioPlayer().playAttackSound();
 
 	}
 
@@ -163,8 +167,8 @@ public class Player extends Entity {
 	public void render(Graphics g, int lvlOffset) {
 		g.drawImage(animations[state][AniIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset + flipX,
 				(int) (hitbox.y - yDrawOffset - 5), 64 * flipW, 64, null);
-	//	drawHitbox(g, lvlOffset);
-	//	drawAttackBox(g, lvlOffset);
+		// drawHitbox(g, lvlOffset);
+		// drawAttackBox(g, lvlOffset);
 		drawUI(g);
 	}
 
@@ -274,6 +278,7 @@ public class Player extends Entity {
 	private void jump() {
 		if (inAir)
 			return;
+		playing.getGame().getAudioPlayer().playEffect(AudioPlayer.JUMP);
 		inAir = true;
 		airSpeed = jumpSpeed;
 

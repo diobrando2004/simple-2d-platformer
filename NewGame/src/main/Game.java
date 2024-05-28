@@ -2,10 +2,12 @@ package main;
 
 import java.awt.Graphics;
 
+import audio.AudioPlayer;
 import gamestates.Gamestate;
 import gamestates.Menu;
 import gamestates.Playing;
 import levels.LevelManager;
+import ui.AudioOptions;
 
 public class Game implements Runnable {
 	private GameWindow gameWindow;
@@ -15,6 +17,8 @@ public class Game implements Runnable {
 	private final int FPS = 120;
 	private Playing playing;
 	private Menu menu;
+	private AudioOptions audioOptions;
+	private AudioPlayer audioPlayer;
 	public final static int TILES_DEFAULT = 32;
 	public final static float scale = 1.5f;
 	public final static int TILES_IN_WIDTH = 26;
@@ -35,6 +39,8 @@ public class Game implements Runnable {
 	}
 
 	private void InitClasses() {
+		audioOptions = new AudioOptions(this);
+		audioPlayer = new AudioPlayer();
 		menu = new Menu(this);
 		playing = new Playing(this);
 
@@ -123,5 +129,13 @@ public class Game implements Runnable {
 
 	public Playing getPlaying() {
 		return playing;
+	}
+
+	public AudioOptions getAudioOptions() {
+		return audioOptions;
+	}
+
+	public AudioPlayer getAudioPlayer() {
+		return audioPlayer;
 	}
 }
